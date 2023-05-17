@@ -1,0 +1,20 @@
+import requests
+
+url = "https://api.icafecloud.com/api/v2/cafe/{cafeId}/pcs"
+headers = {
+    "Authorization": "Bearer {accessToken}",
+    "Content-Type": "application/json"
+}
+params = {
+    "status": "all"
+}
+
+response = requests.get(url, headers=headers, params=params)
+
+if response.status_code == 200:
+    pcs = response.json()
+    for pc in pcs:
+        print("PC Name:", pc["name"])
+        print("Status:", pc["status"])
+else:
+    print("Error:", response.status_code)
