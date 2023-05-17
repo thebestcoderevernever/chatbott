@@ -1,0 +1,16 @@
+import logging
+import requests 
+from aiogram import Bot, Dispatcher, executor, types
+
+token = "6267356800:AAFcr1cPeAH6KpQy_DJYrZl6iVe62pOm-zM"
+
+bot = Bot(token = token)
+dp = Dispatcher(bot)
+
+@dp.message_handler(commands = ["start"])
+async def send_welcome(message: types.Message):
+	pass
+
+
+if __name__ == "__main__":
+	executor.start_polling(dp)
