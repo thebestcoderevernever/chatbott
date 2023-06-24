@@ -1,15 +1,39 @@
 import logging
-import requests 
+import requests
+import csv 
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram import Bot, Dispatcher, executor, types
 
 token = "6267356800:AAFcr1cPeAH6KpQy_DJYrZl6iVe62pOm-zM"
+channel_id = "-1001591185110"
 
 bot = Bot(token = token)
 dp = Dispatcher(bot)
 
-@dp.message_handler(commands = ["start"])
-async def send_welcome(message: types.Message):
-	pass
+async def get_channel_members(channel_id):
+    """
+    Получает список участников канала
+    """
+    # Получаем объект канала
+    channel = await bot.get_chat(channel_id)
+
+    # Получаем список участников канала
+    members = await bot.get_chat_members_id(channel_id)
+
+    return members
+
+# Обработчик команды /members
+@dp.message_handler(commands=['members'])
+async def members_command_handler(message: types.Message):
+    # Получаем список участников канала
+    members = await get_channel_members(message.chat.id)
+
+    # Отправляем список участников канала пользователю
+    await message.answer(f"Количество участников в канале: {members}")
+
+    for member in members: 
+    	print(member)
+
 
 
 if __name__ == "__main__":
